@@ -13,5 +13,7 @@ poetry install
 poetry run streamlit run certified_connectors_standards/streamlit_app.py
 ```
 
-## Deploy
-TBD
+## Generating requirements.txt for Streamlit
+```
+poetry export --format=requirements.txt > requirements.txt
+```
