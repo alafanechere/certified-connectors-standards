@@ -12,8 +12,3 @@ poetry install
 ```bash
 poetry run streamlit run certified_connectors_standards/streamlit_app.py
 ```
-
-## Generating requirements.txt for Streamlit
-```
-poetry export --format=requirements.txt > requirements.txt
-```
