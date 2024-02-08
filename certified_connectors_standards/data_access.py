@@ -1,7 +1,7 @@
 import re
 import pandas as pd
 import requests
-import steamlit as st
+import streamlit as st
 
 from consts import OSS_REGISTRY_URL, DATA_REFRESH_INTERVAL
 from models import Connector

@@ -1,5 +1,5 @@
 import streamlit as st
-from consts import OSS_REGISTRY_URL
+from consts import OSS_REGISTRY_URL, DATA_REFRESH_INTERVAL
 from datasets import (
     CONNECTORS_NOT_ON_PYPI,
     CONNECTORS_NOT_USING_BASE_IMAGE,
@@ -13,7 +13,7 @@ from datasets import (
 )
 from metrics import CERTIFIED_PYTHON_SOURCE_CONNECTORS_METRICS
 
-st.title("👮 Tracking standards adoption by certified Python source connectors")
+st.title("👮 Tracking compliance of our certified Python source connectors to our standards")
 st.markdown(
     """This app helps tracking our progress in enforcing a set of standards on our certified Python connectors:
 - **Adopting the low-code CDK**: to reduce the maintenance burden and improve the connectors reliability.
@@ -130,7 +130,8 @@ st.markdown(
     f"""
 #### Datasource
 All these metrics are computed from the [Airbyte OSS registry]({OSS_REGISTRY_URL}) and by direct access to code files using `raw.github.com`.
-The data is refreshed every 3 hours to ensure the most accurate information is displayed.
+
+The data is refreshed every {round(DATA_REFRESH_INTERVAL / 3600)} hours to ensure the most accurate information is displayed.
 
 Reach out to [@alafanechere](https://github.com/alafanechere) for feedback or question about this app!
 """
