@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "certified-connectors-standards"
+version = "0.1.0"
+description = "A streamlit app to track certify connectors compliance with Airbyte standards"
+authors = ["Augustin Lafanechere <augustin@airbyte.io>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.2.0"
+streamlit = "^1.31.0"
+pygithub = "^2.2.0"
+requests = "^2.31.0"
+watchdog = "^4.0.0"
+semver = "^3.0.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
