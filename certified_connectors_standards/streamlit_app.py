@@ -134,7 +134,7 @@ st.markdown(
 #### Datasource
 All these metrics are computed from the [Airbyte OSS registry]({OSS_REGISTRY_URL}) and by direct access to code files using `raw.github.com`.
 
-The data is refreshed every {round(DATA_REFRESH_INTERVAL / 3600)} hours to ensure the most accurate information is displayed.
+The data is refreshed every {str(DATA_REFRESH_INTERVAL)} hours to ensure the most accurate information is displayed.
 
 Reach out to [@alafanechere](https://github.com/alafanechere) for feedback or question about this app!
 """
