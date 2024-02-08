@@ -13,11 +13,10 @@ from datasets import (
 )
 from metrics import CERTIFIED_PYTHON_SOURCE_CONNECTORS_METRICS
 
-st.set_page_config(
-    page_title="Certified Python source connectors standards compliance",
-    page_icon="👮",
+
+st.title(
+    "👮 Tracking compliance of our certified Python source connectors to our standards"
 )
-st.title("👮 Tracking compliance of our certified Python source connectors to our standards")
 st.markdown(
     """This app helps tracking our progress in enforcing a set of standards on our certified Python connectors:
 - **Adopting the low-code CDK**: to reduce the maintenance burden and improve the connectors reliability.
