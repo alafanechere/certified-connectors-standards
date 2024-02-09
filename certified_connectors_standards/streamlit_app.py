@@ -9,13 +9,16 @@ from metrics import ConnectorMetrics
 try:
     from datasets import (
         filter_connectors,
-        LATEST_BASE_IMAGE_VERSION,
+        get_latest_base_image_version,
         SUPPORT_LEVELS,
-        PYTHON_SOURCE_CONNECTORS,
+        get_python_source_connectors,
     )
 except Exception as e:
     st.error(f"An error occurred while fetching data: {e}")
     raise e
+
+PYTHON_SOURCE_CONNECTORS = get_python_source_connectors()
+LATEST_BASE_IMAGE_VERSION = get_latest_base_image_version()
 
 SUPPORT_LEVELS_CONFIG = {
     "certified": {

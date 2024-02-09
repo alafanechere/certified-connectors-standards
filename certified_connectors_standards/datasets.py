@@ -13,7 +13,6 @@ def get_source_connectors() -> pd.DataFrame:
 def get_destination_connectors() -> pd.DataFrame:
     return data_access.get_connectors_from_registry("destination")
 
-
 def filter_connectors(
     connectors: pd.DataFrame,
     connector_type: str | None = None,
@@ -53,19 +52,23 @@ def filter_connectors(
 
     return connectors
 
+def get_python_source_connectors() -> pd.DataFrame:
+    return filter_connectors(get_source_connectors(), language="python")
 
-PYTHON_SOURCE_CONNECTORS = filter_connectors(
-    get_source_connectors(), connector_type="source", language="python"
-)
-SUPPORT_LEVELS = list(PYTHON_SOURCE_CONNECTORS["support_level"].unique())
 
-LATEST_BASE_IMAGE_VERSION = str(
-    max(
-        [
-            semver.Version.parse(v)
-            for v in PYTHON_SOURCE_CONNECTORS[
-                PYTHON_SOURCE_CONNECTORS["base_image_version"].notnull()
-            ]["base_image_version"].to_list()
-        ]
+
+SUPPORT_LEVELS = list(get_python_source_connectors()["support_level"].unique())
+
+def get_latest_base_image_version():
+    python_source_connectors = get_python_source_connectors()
+    return str(
+        max(
+            [
+                semver.Version.parse(v)
+                for v in python_source_connectors[
+                    python_source_connectors["base_image_version"].notnull()
+                ]["base_image_version"].to_list()
+            ]
+        )
     )
-)
+

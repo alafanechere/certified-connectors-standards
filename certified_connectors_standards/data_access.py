@@ -16,7 +16,7 @@ def check_if_poetry_lockfile_exists(connector_technical_name: str) -> bool:
     return response.status_code == 200
 
 
-@st.cache_data(ttl=DATA_REFRESH_INTERVAL)
+@st.cache_data(ttl=DATA_REFRESH_INTERVAL, show_spinner="Fetching data from the connector registry and Github...")
 def get_connectors_from_registry(connector_type: str) -> pd.DataFrame:
     progress_bar = st.progress(
         0, text=f"Loading {connector_type} connectors from registry..."
