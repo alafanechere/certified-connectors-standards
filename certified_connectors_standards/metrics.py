@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from datasets import CERTIFIED_PYTHON_SOURCE_CONNECTORS
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -61,8 +60,3 @@ class ConnectorMetrics:
     @property
     def migration_to_pypi_progress(self) -> float:
         return self.num_on_pypi / self.total
-
-
-CERTIFIED_PYTHON_SOURCE_CONNECTORS_METRICS = ConnectorMetrics(
-    CERTIFIED_PYTHON_SOURCE_CONNECTORS
-)

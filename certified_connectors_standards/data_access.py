@@ -18,31 +18,34 @@ def check_if_poetry_lockfile_exists(connector_technical_name: str) -> bool:
 
 @st.cache_data(ttl=DATA_REFRESH_INTERVAL)
 def get_connectors_from_registry(connector_type: str) -> pd.DataFrame:
+    progress_bar = st.progress(
+        0, text=f"Loading {connector_type} connectors from registry..."
+    )
+
     if not connector_type in ["source", "destination"]:
         raise ValueError("connector_type must be either 'source' or 'destination'")
 
     registry = requests.get(OSS_REGISTRY_URL).json()
     connectors = []
-    for source in registry[f"{connector_type}s"]:
+    for i, entry in enumerate(registry[f"{connector_type}s"]):
+        progress_bar.progress(i / len(registry[f"{connector_type}s"]))
         is_using_base_image = False
         base_image_version = None
-        if base_image := source.get("connectorBuildOptions", {}).get(
-            "baseImage", False
-        ):
+        if base_image := entry.get("connectorBuildOptions", {}).get("baseImage", False):
             is_using_base_image = True
             base_image_version = re.search(
                 DOCKER_IMAGE_VERSION_PATTERN, base_image
             ).group(1)
-        connector_technical_name = source["dockerRepository"].split("/")[-1]
+        connector_technical_name = entry["dockerRepository"].split("/")[-1]
         connectors.append(
             Connector(
                 type_=connector_type,
                 technical_name=connector_technical_name,
-                support_level=source["supportLevel"],
-                is_on_pypi=source.get("remoteRegistries", {})
+                support_level=entry.get("supportLevel", "community"),
+                is_on_pypi=entry.get("remoteRegistries", {})
                 .get("pypi", {})
                 .get("enabled", False),
-                tags=source.get("tags", []),
+                tags=entry.get("tags", []),
                 is_using_base_image=is_using_base_image,
                 base_image_version=base_image_version,
                 is_using_poetry=check_if_poetry_lockfile_exists(
@@ -50,4 +53,5 @@ def get_connectors_from_registry(connector_type: str) -> pd.DataFrame:
                 ),
             ).to_dict()
         )
+    progress_bar.empty()
     return pd.DataFrame(connectors)
