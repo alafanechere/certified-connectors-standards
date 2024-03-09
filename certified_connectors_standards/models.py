@@ -16,13 +16,12 @@ class Connector:
     @property
     def language(self) -> str:
         for tag in self.tags:
-            if tag in ["language:python", "language:low-code"]:
-                return "python"
-        return "java"
+            if "language" in tag:
+                return tag.split(":")[1]
 
     @property
     def is_low_code(self):
-        return "language:low-code" in self.tags
+        return "cdk:low-code" in self.tags
 
     def to_dict(self):
         return {
